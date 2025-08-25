@@ -9,5 +9,12 @@
     </head>
 
     <body>
+        <form action="/" method="POST">
+            {% csrf_token %}
+            <label for="username">Your Name</label>
+            <input id="username" type="text" name="username"/>
+
+            <button type="submit">Send</button>
+        </form>
     </body>
 </html>
