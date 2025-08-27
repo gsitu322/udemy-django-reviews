@@ -3,9 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .forms import ReviewForm
 from django.views import View
-from django.views.generic import TemplateView
-from django.views.generic import ListView
-
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Review
 
 
@@ -67,10 +65,13 @@ class ReviewsListView(ListView):
     #     data = base_query.filter(rating__gt=3)
     #     return data
 
-class ReviewDetailView(TemplateView):
+class ReviewDetailView(DetailView):
     template_name = "reviews/review_detail.html"
+    model = Review
+    context_object_name = "review"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["review"] = Review.objects.get(id=kwargs["id"])
-        return context
+    # For when we wanted to use the TemplateView
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["review"] = Review.objects.get(id=kwargs["id"])
+    #     return context
