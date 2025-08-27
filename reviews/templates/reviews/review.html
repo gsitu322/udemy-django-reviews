@@ -5,15 +5,18 @@
     <head>
         <meta charset="UTF-8">
         <title>Reviews</title>
+        <link rel="stylesheet" href="{% static "reviews/style.css" %}" />
         <meta name="viewport" content="width=device-width,initial-scale=1">
     </head>
 
     <body>
         <form action="/" method="POST">
             {% csrf_token %}
-            {% if has_error %}<p>This form is invalid - enter a user name</p>{% endif %}
-            <label for="username">Your Name</label>
-            <input id="username" type="text" name="username"/>
+            <div class="form-control {% if form.user_name.errors %}errors{% endif %}">
+               {{ form.user_name.label }}
+                {{ form.user_name }}
+                {{ form.user_name.errors }}
+            </div>
 
             <button type="submit">Send</button>
         </form>
