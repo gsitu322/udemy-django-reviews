@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .forms import ReviewForm
 from django.views import View
+from django.views.generic import TemplateView
 
 # Create your views here.
 class ReviewView(View):
@@ -41,6 +42,5 @@ class ReviewView(View):
 #         'form' : form
 #     })
 
-class ThankYouView(View):
-    def get(self, request):
-        return render(request, "reviews/thank_you.html")
+class ThankYouView(TemplateView):
+    template_name = "reviews/thank_you.html"
