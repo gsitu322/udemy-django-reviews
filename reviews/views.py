@@ -4,20 +4,26 @@ from django.urls import reverse
 from .forms import ReviewForm
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView
 
 from .models import Review
 
 
 # Create your views here.
-class ReviewView(FormView):
+class ReviewView(CreateView):
+    model = Review
     form_class = ReviewForm
     template_name = "reviews/review.html"
     success_url = "/thank-you"
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+    # When Rendering with Form View
+    # form_class = ReviewForm
+    # template_name = "reviews/review.html"
+    # success_url = "/thank-you"
+    #
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super().form_valid(form)
 
     # When rendering with View Class
     # def get(self, request):
