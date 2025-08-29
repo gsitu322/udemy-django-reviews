@@ -87,8 +87,23 @@ class ReviewDetailView(DetailView):
     model = Review
     context_object_name = "review"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_review = self.object
+        request = self.request
+        context["is_favorite"] = str(loaded_review.id) == request.session["favorite_review"]
+
+        return context
+
     # For when we wanted to use the TemplateView
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context["review"] = Review.objects.get(id=kwargs["id"])
     #     return context
+
+
+class AddFavoriteView(View):
+    def post(self, request):
+        review_id = request.POST["review_id"]
+        request.session["favorite_review"] = review_id
+        return HttpResponseRedirect("/reviews/" + review_id)
